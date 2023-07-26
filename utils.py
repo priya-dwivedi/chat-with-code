@@ -26,7 +26,7 @@ class Embedder:
         self.openai = OpenAIEmbeddings()
 
         self.chat_history = []
-        load_dotenv()
+        # load_dotenv()
 
     def clone_repo(self):
         if not os.path.exists(self.clone_path):
