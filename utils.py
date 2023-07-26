@@ -1,10 +1,9 @@
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
-import time
 import git
 import os
 import deeplake
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import DeepLake
