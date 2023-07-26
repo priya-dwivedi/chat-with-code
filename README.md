@@ -18,6 +18,10 @@ To use this codebase chatbot, follow these steps:
 
 ```pip install -r requirements.txt```
 
+3. Set your environment variables in the `.env` file
+* Get your OpenAI API Key and add it here
+* Set up a free account on [Deeplake](https://www.deeplake.ai) and store the API key 
+
 3. Run the Streamlit app:
 
 ```streamlit run chatbot.py```
