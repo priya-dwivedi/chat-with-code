@@ -6,3 +6,4 @@ deeplake
 streamlit
 python-dotenv
 openai
+sentence_transformers
