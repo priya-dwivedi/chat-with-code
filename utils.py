@@ -3,6 +3,7 @@ from langchain.text_splitter import CharacterTextSplitter
 import git
 import os
 import deeplake
+from queue import Queue
 # from dotenv import load_dotenv
 
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -24,9 +25,13 @@ class Embedder:
         self.model = ChatOpenAI(model_name="gpt-3.5-turbo")  # switch to 'gpt-4'
         self.hf = HuggingFaceEmbeddings(model_name=model_name)
         self.openai = OpenAIEmbeddings()
-
-        self.chat_history = []
+        self.chat_history = Queue(maxsize=3)
         # load_dotenv()
+
+    def add_to_queue(self, value):
+        if self.chat_history.full():
+            self.chat_history.get()
+        self.chat_history.put(value)
 
     def clone_repo(self):
         if not os.path.exists(self.clone_path):
@@ -94,8 +99,8 @@ class Embedder:
 
     def retrieve_results(self, query):
 
-        qa = ConversationalRetrievalChain.from_llm(self.model, chain_type="stuff", retriever=self.retriever)
+        qa = ConversationalRetrievalChain.from_llm(self.model, chain_type="stuff", retriever=self.retriever, condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
 
-        result = qa({"question": query, "chat_history": self.chat_history})
+        result = qa({"question": query, "chat_history": list(self.chat_history)})
         self.chat_history.append((query, result["answer"]))
         return result['answer']
