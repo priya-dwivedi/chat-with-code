@@ -1,8 +1,10 @@
 import streamlit as st
 import utils
 import os
-from dotenv import load_dotenv
-# load_dotenv()
+local = False
+if local:
+    from dotenv import load_dotenv
+    load_dotenv()
 
 st.title("Chat-with-your-codebase")
 
