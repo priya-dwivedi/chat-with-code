@@ -25,7 +25,7 @@ class Embedder:
         last_name = self.git_link.split('/')[-1]
         self.clone_path = last_name.split('.')[0]
         self.deeplake_path = f"hub://priyadwivedi/{self.clone_path}"
-        self.model = ChatOpenAI(model_name="gpt-3.5-turbo")  # switch to 'gpt-4'
+        self.model = ChatOpenAI(model_name="gpt-3.5-turbo-0125")  # switch to 'gpt-4'
         self.hf = HuggingFaceEmbeddings(model_name=model_name)
         self.openai = OpenAIEmbeddings()
         self.MyQueue =  Queue(maxsize=2)
@@ -95,7 +95,6 @@ class Embedder:
         self.retriever = self.db.as_retriever()
         self.retriever.search_kwargs['distance_metric'] = 'cos'
         self.retriever.search_kwargs['fetch_k'] = 100
-        self.retriever.search_kwargs['maximal_marginal_relevance'] = True
         self.retriever.search_kwargs['k'] = 3
 
 
